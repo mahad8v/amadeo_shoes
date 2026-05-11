@@ -2840,7 +2840,7 @@ function Footer() {
                 maxWidth: isMobile ? '100%' : 240,
               }}
             >
-              Handcrafted leather footwear since 1923. Built to outlast trends —
+              Handcrafted leather footwear since 1993. Built to outlast trends —
               and time.
             </p>
             <div style={{ display: 'flex', gap: 12, marginTop: 20 }}>
