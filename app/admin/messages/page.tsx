@@ -1,28 +1,28 @@
 // app/admin/messages/page.tsx
-import { prisma } from '@/lib/prisma'
-import { MessageThread } from '@/components/admin/MessageThread'
+import { prisma } from '@/lib/prisma';
+import { MessageThread } from '@/components/admin/MessageThread';
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 
 export default async function MessagesPage({
   searchParams,
 }: {
-  searchParams: { status?: string; id?: string }
+  searchParams: { status?: string; id?: string };
 }) {
-  const status = (searchParams.status ?? 'UNREAD') as any
+  const status = (searchParams.status ?? 'UNREAD') as any;
 
   const messages = await prisma.message.findMany({
     where: status === 'ALL' ? {} : { status },
     orderBy: { createdAt: 'desc' },
     include: { user: { select: { name: true, avatar: true } } },
-  })
+  });
 
   const active = searchParams.id
     ? await prisma.message.findUnique({
         where: { id: searchParams.id },
         include: { user: true },
       })
-    : messages[0] ?? null
+    : (messages[0] ?? null);
 
   return (
     <div className="flex h-full gap-6">
@@ -36,7 +36,9 @@ export default async function MessagesPage({
               key={s}
               href={`/admin/messages?status=${s}`}
               className={`rounded-full px-3 py-1 ${
-                status === s ? 'bg-stone-900 text-white' : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+                status === s
+                  ? 'bg-stone-900 text-white'
+                  : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
               }`}
             >
               {s.charAt(0) + s.slice(1).toLowerCase()}
@@ -44,7 +46,7 @@ export default async function MessagesPage({
           ))}
         </div>
 
-        {messages.map((m) => (
+        {messages.map((m: any) => (
           <a
             key={m.id}
             href={`/admin/messages?status=${status}&id=${m.id}`}
@@ -58,7 +60,9 @@ export default async function MessagesPage({
                 <span className="h-2 w-2 rounded-full bg-amber-500" />
               )}
             </div>
-            <p className="mt-0.5 truncate text-sm text-stone-500">{m.subject}</p>
+            <p className="mt-0.5 truncate text-sm text-stone-500">
+              {m.subject}
+            </p>
             <p className="mt-0.5 text-xs text-stone-400">
               {new Date(m.createdAt).toLocaleDateString()}
             </p>
@@ -81,5 +85,5 @@ export default async function MessagesPage({
         )}
       </div>
     </div>
-  )
+  );
 }
