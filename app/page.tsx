@@ -3420,7 +3420,7 @@ function Nav() {
         {/* Logo */}
         <div style={{ position: 'relative', width: '100px', height: '40px' }}>
           <Image
-            src="/AMADEO_LOGO.png"
+            src="/AMADEO.png"
             alt="Amadeo handcrafted shoe"
             fill
             style={{ objectFit: 'cover', objectPosition: 'center' }}
